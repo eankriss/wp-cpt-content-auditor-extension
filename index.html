@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WP CPT Content Auditor</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="app">
+<header class="header">
+  <div><div class="eyebrow">WORDPRESS CONTENT AUDIT TOOL</div><h1>WP CPT Content Auditor</h1>
+  <p>Check which entries in a selected WordPress CPT have content or no content.</p></div>
+  <button id="themeToggle" class="icon-btn">☾</button>
+</header>
+
+<section class="card setup">
+  <div class="title"><span>1</span><div><h2>Connect to site</h2><p>Enter the public WordPress site URL.</p></div></div>
+  <div class="urlrow">
+    <label><b>Site URL</b><input id="siteUrl" type="url" placeholder="https://games.solaireonline.com/"></label>
+    <button id="discoverBtn" class="primary" disabled>Discover CPTs</button>
+  </div>
+  <div id="message" class="message hidden"></div>
+</section>
+
+<section class="grid">
+<aside class="card controls">
+  <div class="title"><span>2</span><div><h2>Select CPT</h2><p>Choose a REST-enabled post type.</p></div></div>
+
+  <label><b>Post type / CPT</b>
+    <select id="cptSelect" disabled><option>Discover CPTs first</option></select>
+  </label>
+
+  <details>
+    <summary>Manual REST endpoint</summary>
+    <div class="twocol">
+      <label><b>REST namespace</b><input id="restNamespace" value="wp/v2"></label>
+      <label><b>REST base</b><input id="restBase" placeholder="game"></label>
+    </div>
+    <small>Use when you know the public REST endpoint but the CPT is not discovered.</small>
+  </details>
+
+  <hr>
+
+  <label><b>What counts as content?</b>
+    <select id="contentMode">
+      <option value="meaningful" selected>Meaningful content (text or media)</option>
+      <option value="text">Visible text only</option>
+      <option value="markup">Any rendered markup</option>
+    </select>
+    <small>Checks the WordPress <code>content.rendered</code> field. Title and taxonomies do not count.</small>
+  </label>
+
+  <label><b>Include in report</b>
+    <select id="resultMode">
+      <option value="both" selected>Both</option>
+      <option value="has">Has Content only</option>
+      <option value="none">No Content only</option>
+    </select>
+  </label>
+
+  <button id="scanBtn" class="primary full" disabled>Scan Selected CPT</button>
+
+  <div id="progress" class="progress hidden">
+    <div class="track"><div id="bar"></div></div>
+    <strong id="progressTitle">Scanning…</strong><small id="progressText"></small>
+  </div>
+
+  <hr>
+
+  <div class="title compact"><span>3</span><div><h2>Export</h2></div></div>
+  <label><b>File type</b>
+    <select id="exportFormat"><option value="xlsx" selected>XLSX</option><option value="csv">CSV</option></select>
+  </label>
+  <div id="exportNote" class="note"></div>
+  <button id="downloadBtn" class="secondary full" disabled>Download Report</button>
+</aside>
+
+<section class="card results">
+  <div class="results-head">
+    <div><h2>Audit preview</h2><p id="summary">No scan yet.</p></div>
+    <div class="filters">
+      <input id="search" type="search" placeholder="Search title, slug, URL…">
+      <select id="previewFilter"><option value="all">Show all</option><option value="has">Has Content</option><option value="none">No Content</option></select>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div><span>Total</span><strong id="total">0</strong></div>
+    <div><span>Has Content</span><strong id="has">0</strong></div>
+    <div><span>No Content</span><strong id="none">0</strong></div>
+  </div>
+
+  <div id="empty" class="empty"><div>▤</div><h3>No CPT scan yet</h3><p>Discover CPTs, select one, then run the audit.</p></div>
+
+  <div id="tableWrap" class="tablewrap hidden">
+    <table><thead><tr>
+      <th>Status</th><th>ID</th><th>Title</th><th>Slug</th><th>Words</th><th>Characters</th><th>Modified</th><th>Preview Link</th>
+    </tr></thead><tbody id="tbody"></tbody></table>
+  </div>
+</section>
+</section>
+
+<footer>Works with CPTs exposed through the public WordPress REST API.</footer>
+</main>
+<script src="app.js"></script>
+</body></html>

@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "WP CPT Content Auditor",
+  "version": "1.0.0",
+  "description": "Audit WordPress CPT entries for content, preview links, and export CSV/XLSX.",
+  "permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "Open WP CPT Content Auditor"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
